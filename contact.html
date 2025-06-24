@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiniStore - Contact Us</title>
+    <style>
+      /* Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* Professional Header Styles */
+      .top-bar {
+        background-color: #006666;
+        color: white;
+        padding: 0.5rem 2rem;
+        font-size: 0.9rem;
+      }
+
+      .top-bar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .contact-info {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .contact-info a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .user-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      /* Main Navigation */
+      .main-header {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #008080;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        font-weight: 500;
+        color: #333;
+        position: relative;
+        padding: 0.5rem 0;
+      }
+
+      .nav-links a:hover {
+        color: #008080;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #008080;
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .nav-icon {
+        font-size: 1.3rem;
+        color: #555;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .nav-icon:hover {
+        color: #008080;
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: #008080;
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cart-wrapper {
+        position: relative;
+      }
+
+      /* Mobile Menu Toggle */
+      .mobile-menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Contact Page Styles */
+      .contact-page {
+        padding: 3rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        min-height: calc(100vh - 300px);
+      }
+
+      .contact-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .contact-title {
+        font-size: 1.8rem;
+        color: #006666;
+        margin-bottom: 0.5rem;
+      }
+
+      .contact-subtitle {
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .contact-container {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .contact-info-container,
+      .contact-form-container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .contact-info-container {
+        flex: 1;
+      }
+
+      .contact-form-container {
+        flex: 2;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        color: #006666;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .contact-method {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-icon {
+        font-size: 1.2rem;
+        color: #008080;
+        margin-top: 0.2rem;
+      }
+
+      .contact-details h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+        color: #333;
+      }
+
+      .contact-details p,
+      .contact-details a {
+        color: #666;
+        font-size: 0.95rem;
+      }
+
+      .contact-details a:hover {
+        color: #008080;
+        text-decoration: underline;
+      }
+
+      .business-hours {
+        margin-top: 2rem;
+      }
+
+      .hours-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .hours-table tr {
+        border-bottom: 1px solid #eee;
+      }
+
+      .hours-table tr:last-child {
+        border-bottom: none;
+      }
+
+      .hours-table td {
+        padding: 0.5rem 0;
+      }
+
+      .hours-table td:last-child {
+        text-align: right;
+        font-weight: 500;
+      }
+
+      /* Contact Form */
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: #555;
+      }
+
+      .form-input,
+      .form-textarea {
+        padding: 0.8rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-input:focus,
+      .form-textarea:focus {
+        outline: none;
+        border-color: #008080;
+      }
+
+      .form-textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        background-color: #008080;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #006666;
+      }
+
+      .btn-block {
+        display: block;
+        width: 100%;
+      }
+
+      /* Map */
+      .map-container {
+        margin-top: 2rem;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .map-container iframe {
+        width: 100%;
+        height: 300px;
+        border: none;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #008080;
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin: 1rem 0;
+      }
+
+      .footer-links a:hover {
+        text-decoration: underline;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      .social-links a {
+        font-size: 1.2rem;
+        color: white;
+        transition: opacity 0.3s ease;
+      }
+
+      .social-links a:hover {
+        opacity: 0.8;
+      }
+
+      .copyright {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-toggle {
+          display: block;
+        }
+
+        .main-nav.active .nav-links {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: white;
+          padding: 1rem 2rem;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-container {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .top-bar {
+          display: none;
+        }
+
+        .header-container {
+          padding: 1rem;
+        }
+
+        .contact-page {
+          padding: 2rem 1rem;
+        }
+
+        .contact-info-container,
+        .contact-form-container {
+          padding: 1.5rem;
+        }
+
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .contact-title {
+          font-size: 1.5rem;
+        }
+
+        .contact-method {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+    </style>
+    <!-- Using a CDN for simple icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Professional Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-container">
+        <div class="contact-info">
+          <a href="tel:+1234567890"
+            ><i class="fas fa-phone-alt"></i> +1 (234) 567-890</a
+          >
+          <a href="mailto:info@ministore.com"
+            ><i class="fas fa-envelope"></i> info@ministore.com</a
+          >
+        </div>
+        <div class="user-links">
+          <a href="#"><i class="fas fa-user"></i> Account</a>
+          <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Header with Navigation -->
+    <header class="main-header">
+      <div class="header-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-store"></i>
+          MiniStore
+        </a>
+
+        <nav class="main-nav" id="mainNav">
+          <div class="mobile-menu-toggle" id="mobileMenuToggle">
+            <i class="fas fa-bars"></i>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Deals</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+
+          <div class="nav-actions">
+            <div class="search-wrapper">
+              <i class="fas fa-search nav-icon"></i>
+            </div>
+            <div class="user-wrapper">
+              <i class="fas fa-user nav-icon"></i>
+            </div>
+            <div class="cart-wrapper">
+              <a href="cart.html">
+                <i class="fas fa-shopping-cart nav-icon"></i>
+                <span class="cart-count" id="cart-count">0</span>
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Contact Content -->
+    <main class="contact-page">
+      <div class="contact-header">
+        <h1 class="contact-title">Contact Us</h1>
+        <p class="contact-subtitle">
+          We'd love to hear from you! Whether you have a question about
+          products, orders, or anything else, our team is ready to answer all
+          your questions.
+        </p>
+      </div>
+
+      <div class="contact-container">
+        <div class="contact-info-container">
+          <h2 class="section-title">Get in Touch</h2>
+
+          <div class="contact-method">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h3>Our Location</h3>
+              <p>
+                123 Retail Street<br />New York, NY 10001<br />United States
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-method">
+            <div class="contact-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h3>Phone</h3>
+              <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
+              <p>Monday-Friday: 9am-6pm EST</p>
+            </div>
+          </div>
+
+          <div class="contact-method">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <h3>Email</h3>
+              <p><a href="mailto:info@ministore.com">info@ministore.com</a></p>
+              <p>We typically reply within 24 hours</p>
+            </div>
+          </div>
+
+          <div class="business-hours">
+            <h3 class="section-title">Business Hours</h3>
+            <table class="hours-table">
+              <tr>
+                <td>Monday - Friday</td>
+                <td>9:00 AM - 6:00 PM</td>
+              </tr>
+              <tr>
+                <td>Saturday</td>
+                <td>10:00 AM - 4:00 PM</td>
+              </tr>
+              <tr>
+                <td>Sunday</td>
+                <td>Closed</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256018573!2d-73.9878449240254!3d40.74844097138952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1689876723588!5m2!1sen!2sus"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="contact-form-container">
+          <h2 class="section-title">Send Us a Message</h2>
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-input"
+                  placeholder="John Doe"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-input"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject" class="form-label">Subject</label>
+              <input
+                type="text"
+                id="subject"
+                class="form-input"
+                placeholder="What's your question about?"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-label">Message</label>
+              <textarea
+                id="message"
+                class="form-textarea"
+                placeholder="Type your message here..."
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="logo">
+          <i class="fas fa-store"></i>
+          MiniStore
+        </div>
+
+        <div class="footer-links">
+          <a href="#">About Us</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Shipping Policy</a>
+          <a href="#">Returns & Refunds</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+
+        <div class="copyright">&copy; 2023 MiniStore. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle functionality
+      document
+        .getElementById("mobileMenuToggle")
+        .addEventListener("click", function () {
+          document.getElementById("mainNav").classList.toggle("active");
+        });
+
+      // Form submission
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          // Here you would typically send the form data to your server
+          alert("Thank you for your message! We will get back to you soon.");
+          this.reset();
+        });
+
+      // Update cart count (example value)
+      document.getElementById("cart-count").textContent = "2";
+    </script>
+  </body>
+</html>

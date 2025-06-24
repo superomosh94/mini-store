@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniStore - Checkout</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Professional Header Styles */
+        .top-bar {
+            background-color: #006666;
+            color: white;
+            padding: 0.5rem 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .top-bar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .contact-info a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .user-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        /* Main Navigation */
+        .main-header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #008080;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            color: #333;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a:hover {
+            color: #008080;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #008080;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .nav-icon {
+            font-size: 1.3rem;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-icon:hover {
+            color: #008080;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #008080;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-wrapper {
+            position: relative;
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Checkout Page Styles */
+        .checkout-page {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - 300px);
+        }
+        
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .checkout-title {
+            font-size: 1.8rem;
+            color: #006666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkout-subtitle {
+            color: #666;
+        }
+        
+        .checkout-container {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .checkout-form-container, .order-summary-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .checkout-form-container {
+            flex: 2;
+        }
+        
+        .order-summary-container {
+            flex: 1;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            color: #006666;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-input {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #008080;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: #008080;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006666;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            margin-top: 2rem;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-option:hover {
+            border-color: #008080;
+        }
+        
+        .payment-option.active {
+            border-color: #008080;
+            background-color: #f0f9f9;
+        }
+        
+        .payment-option input {
+            margin-right: 1rem;
+        }
+        
+        /* Order Summary */
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .cart-item-price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            padding: 0.3rem 0;
+        }
+        
+        .summary-total {
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .promo-code {
+            margin-top: 1.5rem;
+        }
+        
+        .promo-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .promo-input input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .promo-input button {
+            padding: 0 1.5rem;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .promo-input button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Checkout Progress */
+        .checkout-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+        
+        .checkout-progress::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ddd;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #ddd;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: 600;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .progress-step.active .step-number {
+            background-color: #008080;
+            color: white;
+        }
+        
+        .progress-step.active .step-label {
+            color: #008080;
+            font-weight: 500;
+        }
+        
+        .progress-step.completed .step-number {
+            background-color: #006666;
+            color: white;
+        }
+        
+        .progress-step.completed .step-label {
+            color: #006666;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #008080;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .main-nav.active .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 1rem 2rem;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            
+            .checkout-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-bar {
+                display: none;
+            }
+            
+            .header-container {
+                padding: 1rem;
+            }
+            
+            .checkout-page {
+                padding: 2rem 1rem;
+            }
+            
+            .checkout-form-container, .order-summary-container {
+                padding: 1.5rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .checkout-title {
+                font-size: 1.5rem;
+            }
+            
+            .checkout-progress {
+                margin-bottom: 1.5rem;
+            }
+            
+            .step-label {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+    <!-- Using a CDN for simple icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Professional Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="contact-info">
+                <a href="tel:+1234567890"><i class="fas fa-phone-alt"></i> +1 (234) 567-890</a>
+                <a href="mailto:info@ministore.com"><i class="fas fa-envelope"></i> info@ministore.com</a>
+            </div>
+            <div class="user-links">
+                <a href="#"><i class="fas fa-user"></i> Account</a>
+                <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Header with Navigation -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-store"></i>
+                MiniStore
+            </a>
+            
+            <nav class="main-nav" id="mainNav">
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search nav-icon"></i>
+                    </div>
+                    <div class="user-wrapper">
+                        <i class="fas fa-user nav-icon"></i>
+                    </div>
+                    <div class="cart-wrapper">
+                        <a href="cart.html">
+                            <i class="fas fa-shopping-cart nav-icon"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Checkout Content -->
+    <main class="checkout-page">
+        <div class="checkout-header">
+            <h1 class="checkout-title">Checkout</h1>
+            <p class="checkout-subtitle">Complete your purchase</p>
+        </div>
+        
+        <div class="checkout-progress">
+            <div class="progress-step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Cart</div>
+            </div>
+            <div class="progress-step active">
+                <div class="step-number">2</div>
+                <div class="step-label">Information</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">3</div>
+                <div class="step-label">Shipping</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-number">4</div>
+                <div class="step-label">Payment</div>
+            </div>
+        </div>
+        
+        <div class="checkout-container">
+            <div class="checkout-form-container">
+                <h2 class="section-title">Contact Information</h2>
+                <div class="form-group">
+                    <label for="checkout-email" class="form-label">Email</label>
+                    <input type="email" id="checkout-email" class="form-input" placeholder="your@email.com">
+                </div>
+                
+                <h2 class="section-title">Shipping Address</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name" class="form-label">First Name</label>
+                        <input type="text" id="first-name" class="form-input" placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name" class="form-label">Last Name</label>
+                        <input type="text" id="last-name" class="form-input" placeholder="Doe">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" id="address" class="form-input" placeholder="123 Main St">
+                </div>
+                
+                <div class="form-group">
+                    <label for="apartment" class="form-label">Apartment, suite, etc. (optional)</label>
+                    <input type="text" id="apartment" class="form-input" placeholder="Apt 4B">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" id="city" class="form-input" placeholder="New York">
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="form-label">Country</label>
+                        <select id="country" class="form-input">
+                            <option value="">Select Country</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="UK">United Kingdom</option>
+                            <!-- More countries would be listed here -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="state" class="form-label">State/Province</label>
+                        <input type="text" id="state" class="form-input" placeholder="NY">
+                    </div>
+                    <div class="form-group">
+                        <label for="zip" class="form-label">ZIP/Postal Code</label>
+                        <input type="text" id="zip" class="form-input" placeholder="10001">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" id="phone" class="form-input" placeholder="(123) 456-7890">
+                </div>
+                
+                <h2 class="section-title">Shipping Method</h2>
+                <div class="payment-option active">
+                    <input type="radio" name="shipping" id="standard-shipping" checked>
+                    <label for="standard-shipping">Standard Shipping (3-5 business days) - $5.99</label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" name="shipping" id="express-shipping">
+                    <label for="express-shipping">Express Shipping (1-2 business days) - $12.99</label>
+                </div>
+                
+                <h2 class="section-title">Payment Method</h2>
+                <div class="payment-option active">
+                    <input type="radio" name="payment" id="credit-card" checked>
+                    <label for="credit-card">Credit Card</label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" name="payment" id="paypal">
+                    <label for="paypal">PayPal</label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" name="payment" id="apple-pay">
+                    <label for="apple-pay">Apple Pay</label>
+                </div>
+                
+                <div class="payment-methods" id="credit-card-form">
+                    <div class="form-group">
+                        <label for="card-number" class="form-label">Card Number</label>
+                        <input type="text" id="card-number" class="form-input" placeholder="1234 5678 9012 3456">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="card-name" class="form-label">Name on Card</label>
+                        <input type="text" id="card-name" class="form-input" placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry-date" class="form-label">Expiration Date</label>
+                            <input type="text" id="expiry-date" class="form-input" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv" class="form-label">Security Code</label>
+                            <input type="text" id="cvv" class="form-input" placeholder="CVV">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Complete Order</button>
+            </div>
+            
+            <div class="order-summary-container">
+                <h2 class="section-title">Order Summary</h2>
+                
+                <div class="cart-item">
+                    <img src="https://via.placeholder.com/70" alt="Product" class="cart-item-img">
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">Premium Wireless Headphones</div>
+                        <div class="cart-item-price">$199.99 × 1</div>
+                    </div>
+                </div>
+                
+                <div class="cart-item">
+                    <img src="https://via.placeholder.com/70" alt="Product" class="cart-item-img">
+                    <div class="cart-item-details">
+                                        <div class="cart-item-title">Smart Watch Series 5</div>
+                    <div class="cart-item-price">$249.99 × 1</div>
+                </div>
+            </div>
+            
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>$449.98</span>
+            </div>
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>$5.99</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax</span>
+                <span>$36.00</span>
+            </div>
+            
+            <div class="summary-row summary-total">
+                <span>Total</span>
+                <span>$491.97</span>
+            </div>
+            
+            <div class="promo-code">
+                <label for="promo" class="form-label">Promo Code</label>
+                <div class="promo-input">
+                    <input type="text" id="promo" placeholder="Enter code">
+                    <button type="button">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            MiniStore
+        </div>
+        
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Shipping Policy</a>
+            <a href="#">Returns & Refunds</a>
+            <a href="#">Contact Us</a>
+        </div>
+        
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 MiniStore. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu toggle functionality
+    document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+        document.getElementById('mainNav').classList.toggle('active');
+    });
+    
+    // Payment method selection
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove active class from all options
+            paymentOptions.forEach(opt => opt.classList.remove('active'));
+            // Add active class to clicked option
+            this.classList.add('active');
+            // Check the radio input
+            this.querySelector('input').checked = true;
+        });
+    });
+    
+    // Update cart count (example value)
+    document.getElementById('cart-count').textContent = '2';
+</script>
+</body>
+</html>
