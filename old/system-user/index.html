@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniStore - Login</title>
+    <style>
+        :root {
+            --primary: #0984E3;
+            --primary-dark: #0768B2;
+            --secondary: #DFE6E9;
+            --accent: #00CEFF;
+            --text-dark: #2D3436;
+            --text-light: #FFFFFF;
+            --gray: #B2BEC3;
+            --success: #00B894;
+            --danger: #FF4757;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: var(--space-md);
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: var(--space-lg);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 8px;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: var(--space-md);
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            font-family: var(--font-main);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            margin-top: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #c9d4d8;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: var(--space-md);
+        }
+        
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: var(--danger);
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-store"></i>MiniStore
+        </div>
+        
+        <h2>Login to Your Account</h2>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+                <div id="loginError" class="error-message"></div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="button" onclick="window.location.href='register.html'" class="btn btn-secondary">Create New Account</button>
+            
+            <div class="form-footer">
+                <a href="#">Forgot your password?</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            // if (localStorage.getItem('currentUser')) {
+            //     window.location.href = 'account.html';
+            // }
+            
+            // Login form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const errorElement = document.getElementById('loginError');
+                
+                // Get registered users from localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                
+                // Find user with matching email
+                const user = users.find(u => u.email === email);
+                
+                if (!user) {
+                    errorElement.textContent = 'Email not found. Please register first.';
+                    return;
+                }
+                
+                // Check password (in a real app, this would be hashed)
+                if (user.password !== password) {
+                    errorElement.textContent = 'Incorrect password. Please try again.';
+                    return;
+                }
+                
+                // Login successful
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                // Redirect to appropriate page
+                if (user.isAdmin) {
+                    window.location.href = 'panel.html';
+                } else {
+                    window.location.href = './homePage.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

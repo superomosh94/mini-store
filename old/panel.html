@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniStore - Home</title>
+    <style>
+        :root {
+            /* Modern & Tech Color Palette */
+            --primary: #0984E3;
+            --primary-dark: #0768B2;
+            --secondary: #DFE6E9;
+            --accent: #00CEFF;
+            --accent-light: #7FE9FF;
+            --dark: #000000;
+            --light: #FFFFFF;
+            --text-dark: #2D3436;
+            --text-light: #FFFFFF;
+            --gray: #B2BEC3;
+            --success: #00B894;
+            --danger: #FF4757;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            
+            /* Typography */
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-size-sm: 0.9rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.2rem;
+            --font-size-xl: 1.8rem;
+            --font-size-xxl: 2.5rem;
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--secondary);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Professional Header Styles */
+        .top-bar {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: var(--space-xs) var(--space-lg);
+            font-size: var(--font-size-sm);
+        }
+        
+        .top-bar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        .contact-info a {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            transition: color 0.3s ease;
+        }
+        
+        .contact-info a:hover {
+            color: var(--accent);
+        }
+        
+        .user-links {
+            display: flex;
+            gap: var(--space-sm);
+        }
+        
+        /* Main Navigation */
+        .main-header {
+            background-color: var(--light);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) var(--space-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: var(--font-size-xl);
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-dark);
+            position: relative;
+            padding: var(--space-xs) 0;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .nav-icon {
+            font-size: var(--font-size-lg);
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-icon:hover {
+            color: var(--primary);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary);
+            color: var(--text-light);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-wrapper {
+            position: relative;
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            font-size: var(--font-size-lg);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-xxl);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .hero p {
+            font-size: var(--font-size-md);
+            margin-bottom: var(--space-lg);
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-md);
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Featured Products */
+        .featured {
+            padding: var(--space-xl) var(--space-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            color: var(--primary);
+            font-size: var(--font-size-xxl);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .product-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: var(--space-md);
+        }
+        
+        .product-title {
+            font-size: var(--font-size-md);
+            margin-bottom: var(--space-xs);
+            color: var(--text-dark);
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-lg);
+        }
+        
+        .view-btn {
+            display: block;
+            text-align: center;
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: var(--space-xs);
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn:hover {
+            background-color: var(--primary);
+            color: var(--text-light);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: var(--space-lg);
+            text-align: center;
+            margin-top: var(--space-xl);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin: var(--space-sm) 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin: var(--space-md) 0;
+        }
+        
+        .social-links a {
+            color: var(--text-light);
+            font-size: var(--font-size-lg);
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            margin-top: var(--space-sm);
+            font-size: var(--font-size-sm);
+            opacity: 0.8;
+        }
+
+        /* Admin Panel Styles */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background-color: var(--light);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 2000;
+            padding: var(--space-lg);
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            right: 0;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: var(--primary);
+            color: white;
+            padding: var(--space-sm);
+            border-radius: 5px 0 0 5px;
+            cursor: pointer;
+            z-index: 1999;
+            transition: all 0.3s ease;
+        }
+
+        .admin-toggle:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .admin-form label {
+            font-weight: bold;
+            margin-bottom: var(--space-xs);
+        }
+
+        .admin-form input,
+        .admin-form textarea,
+        .admin-form select {
+            padding: var(--space-xs);
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            margin-bottom: var(--space-sm);
+            font-family: var(--font-main);
+        }
+
+        .admin-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .admin-btn {
+            padding: var(--space-xs) var(--space-sm);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .save-btn:hover {
+            background-color: #00a884;
+        }
+
+        .cancel-btn {
+            background-color: var(--gray);
+            color: var(--text-dark);
+        }
+
+        .cancel-btn:hover {
+            background-color: #a4b0be;
+        }
+
+        .delete-btn {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #e84118;
+        }
+
+        .product-list {
+            margin-top: var(--space-lg);
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-sm);
+            border-bottom: 1px solid var(--gray);
+            align-items: center;
+        }
+
+        .product-item:hover {
+            background-color: var(--secondary);
+        }
+
+        .product-item-actions {
+            display: flex;
+            gap: var(--space-xs);
+        }
+
+        .edit-btn {
+            color: var(--primary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            color: var(--primary-dark);
+        }
+
+        .delete-item-btn {
+            color: var(--danger);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .delete-item-btn:hover {
+            color: #e84118;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            display: none;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: var(--space-lg);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .login-container h2 {
+            margin-bottom: var(--space-md);
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .login-form input {
+            padding: var(--space-sm);
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            font-family: var(--font-main);
+        }
+
+        .login-form button {
+            background-color: var(--primary);
+            color: white;
+            padding: var(--space-sm);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .main-nav.active .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--light);
+                padding: var(--space-sm) var(--space-lg);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .admin-panel {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-bar {
+                display: none;
+            }
+            
+            .header-container {
+                padding: var(--space-sm);
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: var(--space-xl) var(--space-sm);
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+        }
+    </style>
+    <!-- Using a CDN for simple icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Professional Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="contact-info">
+                <a href="tel:+1234567890"><i class="fas fa-phone-alt"></i> +1 (234) 567-890</a>
+                <a href="mailto:info@ministore.com"><i class="fas fa-envelope"></i> info@ministore.com</a>
+            </div>
+            <div class="user-links">
+                <a href="#"><i class="fas fa-user"></i> Account</a>
+                <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Header with Navigation -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-store"></i>
+                MiniStore
+            </a>
+            
+            <nav class="main-nav" id="mainNav">
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search nav-icon"></i>
+                    </div>
+                    <div class="user-wrapper">
+                        <i class="fas fa-user nav-icon"></i>
+                    </div>
+                    <div class="cart-wrapper">
+                        <a href="cart.html">
+                            <i class="fas fa-shopping-cart nav-icon"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 id="hero-title">Welcome to MiniStore</h1>
+            <p id="hero-description">Discover amazing products at unbeatable prices. Shop now and enjoy a seamless shopping experience.</p>
+            <a href="products.html" class="btn">Browse Products</a>
+        </div>
+    </section>
+    
+    <!-- Featured Products -->
+    <section class="featured">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid" id="featured-products">
+            <!-- Products will be inserted here by JavaScript -->
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+            <p class="copyright">© 2023 MiniStore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Panel Toggle -->
+    <div class="admin-toggle" id="adminToggle">
+        <i class="fas fa-cog"></i> Admin
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <h2>Store Admin Panel</h2>
+        <div id="adminLoginSection">
+            <p>Please login to access admin features</p>
+            <button onclick="showLoginModal()" class="btn">Login</button>
+        </div>
+
+        <div id="adminContentSection" style="display: none;">
+            <h3>Edit Hero Section</h3>
+            <div class="admin-form">
+                <label for="edit-hero-title">Title</label>
+                <input type="text" id="edit-hero-title" placeholder="Hero Title">
+                
+                <label for="edit-hero-description">Description</label>
+                <textarea id="edit-hero-description" placeholder="Hero Description"></textarea>
+                
+                <div class="admin-actions">
+                    <button onclick="saveHeroContent()" class="admin-btn save-btn">Save</button>
+                </div>
+            </div>
+
+            <h3>Manage Products</h3>
+            <button onclick="showAddProductForm()" class="btn">Add New Product</button>
+
+            <div id="addProductForm" style="display: none; margin-top: var(--space-md);">
+                <div class="admin-form">
+                    <label for="new-product-name">Product Name</label>
+                    <input type="text" id="new-product-name" placeholder="Product Name">
+                    
+                    <label for="new-product-price">Price</label>
+                    <input type="number" id="new-product-price" placeholder="Price" step="0.01" min="0">
+                    
+                    <label for="new-product-image">Image URL</label>
+                    <input type="text" id="new-product-image" placeholder="Image URL">
+                    
+                    <div class="admin-actions">
+                        <button onclick="addNewProduct()" class="admin-btn save-btn">Add Product</button>
+                        <button onclick="hideAddProductForm()" class="admin-btn cancel-btn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-list" id="productList">
+                <!-- Product list will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <h2>Admin Login</h2>
+            <div class="login-form">
+                <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+                <button onclick="verifyAdminLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Default product data
+        const defaultProducts = [
+            { id: 1, name: "Wireless Headphones", price: 59.99, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D" },
+            { id: 2, name: "Smart Watch", price: 129.99, image: "https://images.unsplash.com/photo-1461141346587-763ab02bced9?q=80&w=1100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { id: 3, name: "Bluetooth Speaker", price: 45.50, image: "https://images.unsplash.com/photo-1518671678551-911467efe539?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { id: 4, name: "Laptop Backpack", price: 39.99, image: "https://images.unsplash.com/photo-1673505379580-fe6de14f3080?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { id: 5, name: "Wireless Mouse", price: 24.99, image: "https://images.unsplash.com/photo-1586349906319-48d20e9d17e5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2lyZWxlc3MlMjBtb3VzZXxlbnwwfHwwfHx8MA%3D%3D" },
+            { id: 6, name: "Mechanical Keyboard", price: 89.99, image: "https://images.unsplash.com/photo-1602025882379-e01cf08baa51?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWVjaGFuaWNhbCUyMGtleWJvYXJkfGVufDB8fDB8fHww" },
+            { id: 7, name: "Fitness Tracker", price: 49.99, image: "https://images.unsplash.com/photo-1665860455423-166cab57c383?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Zml0bmVzcyUyMHRyYWNrZXJ8ZW58MHx8MHx8fDA%3D" },
+            { id: 8, name: "Portable Charger", price: 29.99, image: "https://images.unsplash.com/photo-1745888050708-b6136ce7fde3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHBvcnRhYmxlJTIwY2hhcmdlcnxlbnwwfHwwfHx8MA%3D%3D" },
+            { id: 9, name: "Gaming Mousepad", price: 19.99, image: "https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z2FtaW5nJTIwbW91c2VwYWR8ZW58MHx8MHx8fDA%3D" },
+            { id: 10, name: "USB-C Hub", price: 34.99, image: "https://images.unsplash.com/photo-1616578273577-5d54546f4dec?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNiJTIwYyUyMGh1YnxlbnwwfHwwfHx8MA%3D%3D" }
+        ];
+
+        // Default hero content
+        const defaultHeroContent = {
+            title: "Welcome to MiniStore",
+            description: "Discover amazing products at unbeatable prices. Shop now and enjoy a seamless shopping experience."
+        };
+
+        // Admin password (in a real app, this would be hashed and more secure)
+        const ADMIN_PASSWORD = "admin123";
+        let isAdminLoggedIn = false;
+
+        // Initialize the store when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStore();
+        });
+
+        // Initialize the store
+        function initializeStore() {
+            // Load or initialize products
+            let products = JSON.parse(localStorage.getItem('storeProducts'));
+            if (!products || products.length === 0) {
+                products = defaultProducts;
+                localStorage.setItem('storeProducts', JSON.stringify(products));
+            }
+
+            // Load or initialize hero content
+            let heroContent = JSON.parse(localStorage.getItem('heroContent'));
+            if (!heroContent) {
+                heroContent = defaultHeroContent;
+                localStorage.setItem('heroContent', JSON.stringify(heroContent));
+            }
+
+            // Display products and hero content
+            displayFeaturedProducts();
+            displayHeroContent();
+            updateCartCount();
+            setupMobileMenu();
+            setupAdminPanel();
+
+            // Check if admin is logged in from previous session
+            const adminSession = localStorage.getItem('adminSession');
+            if (adminSession === 'true') {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLoginSection').style.display = 'none';
+                document.getElementById('adminContentSection').style.display = 'block';
+                loadAdminData();
+            }
+        }
+
+        // Display featured products
+        function displayFeaturedProducts() {
+            const productsGrid = document.getElementById('featured-products');
+            productsGrid.innerHTML = '';
+            
+            const products = JSON.parse(localStorage.getItem('storeProducts')) || [];
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <a href="product-details.html?id=${product.id}" class="view-btn">View Details</a>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // Display hero content
+        function displayHeroContent() {
+            const heroContent = JSON.parse(localStorage.getItem('heroContent')) || defaultHeroContent;
+            document.getElementById('hero-title').textContent = heroContent.title;
+            document.getElementById('hero-description').textContent = heroContent.description;
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+
+        // Mobile menu toggle functionality
+        function setupMobileMenu() {
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+            const mainNav = document.getElementById('mainNav');
+            
+            mobileToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mainNav.classList.toggle('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mainNav.contains(e.target)) {
+                    mainNav.classList.remove('active');
+                }
+            });
+        }
+
+        // Setup admin panel functionality
+        function setupAdminPanel() {
+            const adminToggle = document.getElementById('adminToggle');
+            const adminPanel = document.getElementById('adminPanel');
+            
+            adminToggle.addEventListener('click', function() {
+                adminPanel.classList.toggle('active');
+            });
+            
+            // Close admin panel when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!adminPanel.contains(e.target) && e.target !== adminToggle && !adminToggle.contains(e.target)) {
+                    adminPanel.classList.remove('active');
+                }
+            });
+        }
+
+        // Show login modal
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+            document.getElementById('adminPassword').focus();
+        }
+
+        // Hide login modal
+        function hideLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+        }
+
+        // Verify admin login
+        function verifyAdminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                localStorage.setItem('adminSession', 'true');
+                document.getElementById('adminLoginSection').style.display = 'none';
+                document.getElementById('adminContentSection').style.display = 'block';
+                loadAdminData();
+                hideLoginModal();
+                alert('Login successful!');
+            } else {
+                alert('Incorrect password!');
+            }
+        }
+
+        // Load admin data
+        function loadAdminData() {
+            if (!isAdminLoggedIn) return;
+            
+            // Load hero content into form
+            const heroContent = JSON.parse(localStorage.getItem('heroContent')) || defaultHeroContent;
+            document.getElementById('edit-hero-title').value = heroContent.title;
+            document.getElementById('edit-hero-description').value = heroContent.description;
+            
+            // Load products list
+            loadProductList();
+        }
+
+        // Save hero content
+        function saveHeroContent() {
+            if (!isAdminLoggedIn) return;
+            
+            const newTitle = document.getElementById('edit-hero-title').value;
+            const newDescription = document.getElementById('edit-hero-description').value;
+            
+            if (!newTitle || !newDescription) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            localStorage.setItem('heroContent', JSON.stringify({
+                title: newTitle,
+                description: newDescription
+            }));
+            
+            // Update the display
+            displayHeroContent();
+            alert('Hero content saved!');
+        }
+
+        // Show add product form
+        function showAddProductForm() {
+            document.getElementById('addProductForm').style.display = 'block';
+            document.getElementById('new-product-name').focus();
+        }
+
+        // Hide add product form
+        function hideAddProductForm() {
+            document.getElementById('addProductForm').style.display = 'none';
+            // Clear form
+            document.getElementById('new-product-name').value = '';
+            document.getElementById('new-product-price').value = '';
+            document.getElementById('new-product-image').value = '';
+        }
+
+        // Add new product
+        function addNewProduct() {
+            if (!isAdminLoggedIn) return;
+            
+            const name = document.getElementById('new-product-name').value;
+            const price = parseFloat(document.getElementById('new-product-price').value);
+            const image = document.getElementById('new-product-image').value;
+            
+            if (!name || isNaN(price) || !image) {
+                alert('Please fill in all fields correctly');
+                return;
+            }
+            
+            if (price <= 0) {
+                alert('Price must be greater than 0');
+                return;
+            }
+            
+            const products = JSON.parse(localStorage.getItem('storeProducts')) || [];
+            const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+            
+            products.push({
+                id: newId,
+                name: name,
+                price: price,
+                image: image
+            });
+            
+            localStorage.setItem('storeProducts', JSON.stringify(products));
+            
+            // Refresh displays
+            displayFeaturedProducts();
+            loadProductList();
+            hideAddProductForm();
+            
+            alert('Product added successfully!');
+        }
+
+        // Load product list for admin
+                // Load product list for admin
+        function loadProductList() {
+            if (!isAdminLoggedIn) return;
+            
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            
+            const products = JSON.parse(localStorage.getItem('storeProducts')) || [];
+            
+            if (products.length === 0) {
+                productList.innerHTML = '<p>No products found.</p>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div>
+                        <strong>${product.name}</strong>
+                        <span>$${product.price.toFixed(2)}</span>
+                    </div>
+                    <div class="product-item-actions">
+                        <i class="fas fa-edit edit-btn" onclick="editProduct(${product.id})"></i>
+                        <i class="fas fa-trash delete-item-btn" onclick="deleteProduct(${product.id})"></i>
+                    </div>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
+
+        // Edit product
+        function editProduct(productId) {
+            if (!isAdminLoggedIn) return;
+            
+            const products = JSON.parse(localStorage.getItem('storeProducts')) || [];
+            const product = products.find(p => p.id === productId);
+            
+            if (!product) {
+                alert('Product not found');
+                return;
+            }
+            
+            const newName = prompt('Enter new product name:', product.name);
+            if (newName === null) return;
+            
+            const newPrice = parseFloat(prompt('Enter new price:', product.price));
+            if (isNaN(newPrice) || newPrice <= 0) {
+                alert('Invalid price');
+                return;
+            }
+            
+            const newImage = prompt('Enter new image URL:', product.image);
+            if (newImage === null) return;
+            
+            product.name = newName;
+            product.price = newPrice;
+            product.image = newImage;
+            
+            localStorage.setItem('storeProducts', JSON.stringify(products));
+            
+            // Refresh displays
+            displayFeaturedProducts();
+            loadProductList();
+            
+            alert('Product updated successfully!');
+        }
+
+        // Delete product
+        function deleteProduct(productId) {
+            if (!isAdminLoggedIn) return;
+            
+            if (!confirm('Are you sure you want to delete this product?')) {
+                return;
+            }
+            
+            const products = JSON.parse(localStorage.getItem('storeProducts')) || [];
+            const updatedProducts = products.filter(p => p.id !== productId);
+            
+            localStorage.setItem('storeProducts', JSON.stringify(updatedProducts));
+            
+            // Refresh displays
+            displayFeaturedProducts();
+            loadProductList();
+            
+            alert('Product deleted successfully!');
+        }
+
+        // Reset store to default
+        function resetStoreToDefault() {
+            if (!isAdminLoggedIn) return;
+            
+            if (!confirm('Are you sure you want to reset the store to default settings? This cannot be undone.')) {
+                return;
+            }
+            
+            localStorage.setItem('storeProducts', JSON.stringify(defaultProducts));
+            localStorage.setItem('heroContent', JSON.stringify(defaultHeroContent));
+            
+            // Refresh displays
+            displayFeaturedProducts();
+            displayHeroContent();
+            loadProductList();
+            
+            alert('Store has been reset to default settings!');
+        }
+
+        // Logout admin
+        function adminLogout() {
+            isAdminLoggedIn = false;
+            localStorage.removeItem('adminSession');
+            document.getElementById('adminLoginSection').style.display = 'block';
+            document.getElementById('adminContentSection').style.display = 'none';
+            alert('You have been logged out.');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniStore - Admin Panel</title>
+    <style>
+        :root {
+            --primary: #0984E3;
+            --primary-dark: #0768B2;
+            --secondary: #DFE6E9;
+            --accent: #00CEFF;
+            --accent-light: #7FE9FF;
+            --dark: #000000;
+            --light: #FFFFFF;
+            --text-dark: #2D3436;
+            --text-light: #FFFFFF;
+            --gray: #B2BEC3;
+            --success: #00B894;
+            --danger: #FF4757;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-size-sm: 0.9rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.2rem;
+            --font-size-xl: 1.8rem;
+            --font-size-xxl: 2.5rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--secondary);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Admin Header */
+        .admin-header {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: var(--space-sm) var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-logo {
+            font-size: var(--font-size-xl);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        .admin-nav a {
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        
+        .admin-nav a:hover {
+            color: var(--accent);
+        }
+        
+        .admin-logout {
+            background-color: var(--danger);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .admin-logout:hover {
+            background-color: #e84118;
+        }
+        
+        /* Admin Content */
+        .admin-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 60px);
+        }
+        
+        /* Admin Sidebar */
+        .admin-sidebar {
+            background-color: var(--light);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .admin-menu {
+            list-style: none;
+        }
+        
+        .admin-menu-item {
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .admin-menu-link {
+            display: block;
+            padding: var(--space-sm) var(--space-md);
+            transition: all 0.3s ease;
+        }
+        
+        .admin-menu-link:hover, .admin-menu-link.active {
+            background-color: var(--primary);
+            color: var(--text-light);
+        }
+        
+        .admin-menu-link i {
+            margin-right: var(--space-xs);
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Admin Main Content */
+        .admin-main {
+            padding: var(--space-lg);
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: var(--font-size-xl);
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-xs);
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        /* Dashboard Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .stat-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: var(--space-md);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .stat-title {
+            font-size: var(--font-size-sm);
+            color: var(--gray);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .stat-value {
+            font-size: var(--font-size-xl);
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        /* Products Section */
+        .admin-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+        }
+        
+        .admin-btn {
+            padding: var(--space-xs) var(--space-sm);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .add-btn {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .add-btn:hover {
+            background-color: #00a884;
+        }
+        
+        .export-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .export-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--light);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .products-table th, .products-table td {
+            padding: var(--space-sm);
+            text-align: left;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .products-table th {
+            background-color: var(--primary);
+            color: var(--text-light);
+        }
+        
+        .products-table tr:hover {
+            background-color: var(--secondary);
+        }
+        
+        .product-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .action-btn {
+            padding: 5px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .edit-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .edit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .delete-btn {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background-color: #e84118;
+        }
+        
+        /* Orders Section */
+        .order-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: var(--font-size-sm);
+            font-weight: bold;
+        }
+        
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Users Section */
+        .user-role {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: var(--font-size-sm);
+            font-weight: bold;
+            background-color: var(--secondary);
+            color: var(--text-dark);
+        }
+        
+        .role-admin {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .admin-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-actions {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-logo">
+            <i class="fas fa-store"></i>
+            MiniStore Admin
+        </div>
+        
+        <nav class="admin-nav">
+            <a href="index.html"><i class="fas fa-home"></i> View Store</a>
+            <button class="admin-logout" id="adminLogoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </nav>
+    </header>
+    
+    <!-- Admin Content -->
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <ul class="admin-menu">
+                <li class="admin-menu-item">
+                    <a href="#dashboard" class="admin-menu-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="admin-menu-item">
+                    <a href="#products" class="admin-menu-link" data-section="products">
+                        <i class="fas fa-box-open"></i> Products
+                    </a>
+                </li>
+                <li class="admin-menu-item">
+                    <a href="#orders" class="admin-menu-link" data-section="orders">
+                        <i class="fas fa-shopping-bag"></i> Orders
+                    </a>
+                </li>
+                <li class="admin-menu-item">
+                    <a href="#users" class="admin-menu-link" data-section="users">
+                        <i class="fas fa-users"></i> Users
+                    </a>
+                </li>
+                <li class="admin-menu-item">
+                    <a href="#settings" class="admin-menu-link" data-section="settings">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- Admin Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="admin-section active">
+                <h2 class="section-title">Dashboard Overview</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Total Sales</div>
+                        <div class="stat-value">$12,345</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Orders</div>
+                        <div class="stat-value">156</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Products</div>
+                        <div class="stat-value">42</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Users</div>
+                        <div class="stat-value">89</div>
+                    </div>
+                </div>
+                
+                <h3>Recent Orders</h3>
+                <div id="recentOrders">
+                    <!-- Recent orders will be loaded here -->
+                </div>
+            </section>
+            
+            <!-- Products Section -->
+            <section id="products" class="admin-section">
+                <h2 class="section-title">Manage Products</h2>
+                
+                <div class="admin-actions">
+                    <button class="admin-btn add-btn" id="addProductBtn">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                    <button class="admin-btn export-btn">
+                        <i class="fas fa-file-export"></i> Export Products
+                    </button>
+                </div>
+                
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- Orders Section -->
+            <section id="orders" class="admin-section">
+                <h2 class="section-title">Manage Orders</h2>
+                
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <!-- Orders will be loaded here -->
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- Users Section -->
+            <section id="users" class="admin-section">
+                <h2 class="section-title">Manage Users</h2>
+                
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- Settings Section -->
+            <section id="settings" class="admin-section">
+                <h2 class="section-title">Store Settings</h2>
+                
+                <form id="settingsForm">
+                    <div class="form-group">
+                        <label for="storeName">Store Name</label>
+                        <input type="text" id="storeName" value="MiniStore">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="storeEmail">Store Email</label>
+                        <input type="email" id="storeEmail" value="info@ministore.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="storePhone">Store Phone</label>
+                        <input type="tel" id="storePhone" value="+1 (234) 567-890">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="storeAddress">Store Address</label>
+                        <input type="text" id="storeAddress" value="123 Main Street, New York, NY 10001">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="storeCurrency">Currency</label>
+                        <select id="storeCurrency">
+                            <option value="USD" selected>US Dollar (USD)</option>
+                            <option value="EUR">Euro (EUR)</option>
+                            <option value="GBP">British Pound (GBP)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="admin-btn add-btn">Save Settings</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    class AdminPanel {
+        constructor() {
+            this.initElements();
+            this.checkAuth();
+            this.initEventListeners();
+            this.loadAllData();
+        }
+
+        // Cache DOM elements
+        initElements() {
+            this.elements = {
+                logoutBtn: document.getElementById('adminLogoutBtn'),
+                addProductBtn: document.getElementById('addProductBtn'),
+                menuLinks: document.querySelectorAll('.admin-menu-link'),
+                sections: document.querySelectorAll('.admin-section'),
+                productsTable: document.getElementById('productsTableBody'),
+                ordersTable: document.getElementById('ordersTableBody'),
+                usersTable: document.getElementById('usersTableBody'),
+                recentOrders: document.getElementById('recentOrders'),
+                settingsForm: document.getElementById('settingsForm')
+            };
+        }
+
+        // Check if user is authenticated and is admin
+        checkAuth() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser?.isAdmin) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Display admin name in header (optional enhancement)
+            this.displayAdminInfo(currentUser);
+        }
+
+        // Display admin user info (optional)
+        displayAdminInfo(user) {
+            const adminInfo = document.createElement('div');
+            adminInfo.className = 'admin-info';
+            adminInfo.innerHTML = `
+                <i class="fas fa-user-circle"></i>
+                <span>${user.name || 'Admin'}</span>
+            `;
+            document.querySelector('.admin-nav').prepend(adminInfo);
+        }
+
+        // Set up all event listeners
+        initEventListeners() {
+            // Logout button
+            this.elements.logoutBtn.addEventListener('click', this.handleLogout.bind(this));
+            
+            // Add product button
+            this.elements.addProductBtn.addEventListener('click', this.showAddProductModal.bind(this));
+            
+            // Menu navigation
+            this.elements.menuLinks.forEach(link => {
+                link.addEventListener('click', (e) => this.handleMenuNavigation(e, link));
+            });
+            
+            // Settings form submission
+            if (this.elements.settingsForm) {
+                this.elements.settingsForm.addEventListener('submit', this.handleSettingsSave.bind(this));
+            }
+        }
+
+        // Load all initial data
+        loadAllData() {
+            this.loadDashboard();
+            this.loadProducts();
+            this.loadOrders();
+            this.loadUsers();
+        }
+
+        // Dashboard section
+        loadDashboard() {
+            const stats = {
+                totalSales: 12345,
+                totalOrders: 156,
+                totalProducts: 42,
+                totalUsers: 89
+            };
+            
+            // Update stats cards
+            document.querySelectorAll('.stat-card').forEach((card, index) => {
+                const value = Object.values(stats)[index];
+                card.querySelector('.stat-value').textContent = 
+                    index === 0 ? `$${value.toLocaleString()}` : value;
+            });
+            
+            // Recent orders
+            const recentOrdersData = this.getSampleOrders().slice(0, 5);
+            this.renderOrdersTable(this.elements.recentOrders, recentOrdersData);
+        }
+
+        // Products section
+        loadProducts() {
+            const products = this.getSampleProducts();
+            this.renderProductsTable(products);
+            
+            // Add event listeners to product action buttons
+            this.addTableActionListeners('products');
+        }
+
+        // Orders section
+        loadOrders() {
+            const orders = this.getSampleOrders();
+            this.renderOrdersTable(this.elements.ordersTable, orders);
+            
+            // Add event listeners to order action buttons
+            this.addTableActionListeners('orders');
+        }
+
+        // Users section
+        loadUsers() {
+            const users = this.getSampleUsers();
+            this.renderUsersTable(users);
+            
+            // Add event listeners to user action buttons
+            this.addTableActionListeners('users');
+        }
+
+        // Table rendering functions
+        renderProductsTable(products) {
+            this.elements.productsTable.innerHTML = products.map(product => `
+                <tr data-id="${product.id}">
+                    <td>${product.id}</td>
+                    <td><img src="${product.image}" alt="${product.name}" class="product-img"></td>
+                    <td>${product.name}</td>
+                    <td>$${product.price.toFixed(2)}</td>
+                    <td>${product.stock}</td>
+                    <td>
+                        <button class="action-btn edit-btn" data-action="edit"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn" data-action="delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        renderOrdersTable(container, orders) {
+            container.innerHTML = `
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            ${container === this.elements.ordersTable ? '<th>Actions</th>' : ''}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${orders.map(order => `
+                            <tr data-id="${order.id}">
+                                <td>${order.id}</td>
+                                <td>${order.customer}</td>
+                                <td>${this.formatDate(order.date)}</td>
+                                <td>$${order.amount.toFixed(2)}</td>
+                                <td><span class="order-status ${this.getStatusClass(order.status)}">${order.status}</span></td>
+                                ${container === this.elements.ordersTable ? `
+                                <td>
+                                    <button class="action-btn edit-btn" data-action="edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete-btn" data-action="delete"><i class="fas fa-trash"></i></button>
+                                </td>` : ''}
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        renderUsersTable(users) {
+            this.elements.usersTable.innerHTML = users.map(user => `
+                <tr data-id="${user.id}">
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td><span class="user-role ${user.role === 'admin' ? 'role-admin' : ''}">${user.role}</span></td>
+                    <td>${this.formatDate(user.joined)}</td>
+                    <td>
+                        <button class="action-btn edit-btn" data-action="edit"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn" data-action="delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Event handlers
+        handleMenuNavigation(e, link) {
+            e.preventDefault();
+            
+            // Update active menu item
+            this.elements.menuLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            
+            // Show corresponding section
+            const sectionId = link.getAttribute('data-section');
+            this.elements.sections.forEach(section => {
+                section.classList.toggle('active', section.id === sectionId);
+            });
+        }
+
+        handleLogout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+
+        showAddProductModal() {
+            // In a real app, this would show a modal form
+            alert('Add product modal would appear here');
+            // this.modal.show('add-product');
+        }
+
+        handleSettingsSave(e) {
+            e.preventDefault();
+            // In a real app, this would save to backend
+            alert('Settings saved successfully!');
+        }
+
+        // Helper methods
+        addTableActionListeners(type) {
+            const table = this.elements[`${type}Table`];
+            if (!table) return;
+            
+            table.addEventListener('click', (e) => {
+                const btn = e.target.closest('button');
+                if (!btn) return;
+                
+                const action = btn.getAttribute('data-action');
+                const row = btn.closest('tr');
+                const id = row.getAttribute('data-id');
+                
+                if (action === 'edit') {
+                    this.handleEdit(type, id);
+                } else if (action === 'delete') {
+                    this.handleDelete(type, id);
+                }
+            });
+        }
+
+        handleEdit(type, id) {
+            alert(`Edit ${type.slice(0, -1)} with ID: ${id}`);
+            // In a real app: this.modal.show('edit', {type, id});
+        }
+
+        handleDelete(type, id) {
+            if (confirm(`Are you sure you want to delete this ${type.slice(0, -1)}?`)) {
+                alert(`Deleted ${type.slice(0, -1)} with ID: ${id}`);
+                // In a real app: this.api.delete(type, id).then(() => this.loadData());
+            }
+        }
+
+        // Sample data generators
+        getSampleProducts() {
+            return [
+                { id: 1, name: "Wireless Headphones", price: 59.99, stock: 25, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D" },
+                { id: 2, name: "Smart Watch", price: 129.99, stock: 15, image: "https://images.unsplash.com/photo-1461141346587-763ab02bced9?q=80&w=1100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                { id: 3, name: "Bluetooth Speaker", price: 45.50, stock: 32, image: "https://images.unsplash.com/photo-1518671678551-911467efe539?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
+            ];
+        }
+
+        getSampleOrders() {
+            return [
+                { id: "ORD-12345", customer: "John Doe", date: "2023-05-15", amount: 84.98, status: "completed" },
+                { id: "ORD-12344", customer: "Jane Smith", date: "2023-05-14", amount: 129.99, status: "completed" },
+                { id: "ORD-12343", customer: "Bob Johnson", date: "2023-05-13", amount: 45.50, status: "pending" },
+                { id: "ORD-12342", customer: "Alice Brown", date: "2023-05-12", amount: 59.99, status: "completed" },
+                { id: "ORD-12341", customer: "Charlie Wilson", date: "2023-05-11", amount: 129.99, status: "cancelled" }
+            ];
+        }
+
+        getSampleUsers() {
+            return [
+                { id: 1, name: "Admin User", email: "admin@ministore.com", role: "admin", joined: "2022-01-01" },
+                { id: 2, name: "John Doe", email: "john.doe@example.com", role: "customer", joined: "2022-05-15" },
+                { id: 3, name: "Jane Smith", email: "jane.smith@example.com", role: "customer", joined: "2022-06-20" },
+                { id: 4, name: "Bob Johnson", email: "bob.johnson@example.com", role: "customer", joined: "2023-01-10" }
+            ];
+        }
+
+        formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        getStatusClass(status) {
+            const statusClasses = {
+                completed: 'status-completed',
+                pending: 'status-pending',
+                cancelled: 'status-cancelled'
+            };
+            return statusClasses[status] || '';
+        }
+    }
+
+    // Initialize the admin panel
+    new AdminPanel();
+});
+    </script>
+
+</body>
+</html>

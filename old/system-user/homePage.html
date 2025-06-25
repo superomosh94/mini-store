@@ -5,6 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiniStore - Home</title>
     <style>
+        :root {
+            /* Modern & Tech Color Palette */
+            --primary: #0984E3;
+            --primary-dark: #0768B2;
+            --secondary: #DFE6E9;
+            --accent: #00CEFF;
+            --accent-light: #7FE9FF;
+            --dark: #000000;
+            --light: #FFFFFF;
+            --text-dark: #2D3436;
+            --text-light: #FFFFFF;
+            --gray: #B2BEC3;
+            --success: #00B894;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            
+            /* Typography */
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-size-sm: 0.9rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.2rem;
+            --font-size-xl: 1.8rem;
+            --font-size-xxl: 2.5rem;
+        }
+        
         /* Reset and Base Styles */
         * {
             margin: 0;
@@ -13,10 +43,10 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-main);
             line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
+            color: var(--text-dark);
+            background-color: var(--secondary);
         }
         
         a {
@@ -26,10 +56,10 @@
         
         /* Professional Header Styles */
         .top-bar {
-            background-color: #006666;
-            color: white;
-            padding: 0.5rem 2rem;
-            font-size: 0.9rem;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: var(--space-xs) var(--space-lg);
+            font-size: var(--font-size-sm);
         }
         
         .top-bar-container {
@@ -42,23 +72,28 @@
         
         .contact-info {
             display: flex;
-            gap: 1.5rem;
+            gap: var(--space-md);
         }
         
         .contact-info a {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--space-xs);
+            transition: color 0.3s ease;
+        }
+        
+        .contact-info a:hover {
+            color: var(--accent);
         }
         
         .user-links {
             display: flex;
-            gap: 1rem;
+            gap: var(--space-sm);
         }
         
         /* Main Navigation */
         .main-header {
-            background-color: white;
+            background-color: var(--light);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
@@ -69,40 +104,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: var(--space-sm) var(--space-lg);
             max-width: 1200px;
             margin: 0 auto;
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: var(--font-size-xl);
             font-weight: bold;
-            color: #008080;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--space-xs);
         }
         
         .main-nav {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: var(--space-lg);
         }
         
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: var(--space-md);
         }
         
         .nav-links a {
             font-weight: 500;
-            color: #333;
+            color: var(--text-dark);
             position: relative;
-            padding: 0.5rem 0;
+            padding: var(--space-xs) 0;
+            transition: color 0.3s ease;
         }
         
         .nav-links a:hover {
-            color: #008080;
+            color: var(--primary);
         }
         
         .nav-links a::after {
@@ -112,7 +148,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: #008080;
+            background-color: var(--accent);
             transition: width 0.3s ease;
         }
         
@@ -123,26 +159,26 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: var(--space-md);
         }
         
         .nav-icon {
-            font-size: 1.3rem;
-            color: #555;
+            font-size: var(--font-size-lg);
+            color: var(--text-dark);
             cursor: pointer;
             transition: color 0.3s ease;
         }
         
         .nav-icon:hover {
-            color: #008080;
+            color: var(--primary);
         }
         
         .cart-count {
             position: absolute;
             top: -8px;
             right: -8px;
-            background-color: #008080;
-            color: white;
+            background-color: var(--primary);
+            color: var(--text-light);
             border-radius: 50%;
             width: 18px;
             height: 18px;
@@ -159,15 +195,16 @@
         /* Mobile Menu Toggle */
         .mobile-menu-toggle {
             display: none;
-            font-size: 1.5rem;
+            font-size: var(--font-size-lg);
             cursor: pointer;
         }
         
         /* Hero Section */
         .hero {
-            background-color: #e0f2f1;
-            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: var(--space-xl) var(--space-lg);
             text-align: center;
+            color: var(--text-light);
         }
         
         .hero-content {
@@ -176,62 +213,66 @@
         }
         
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #006666;
+            font-size: var(--font-size-xxl);
+            margin-bottom: var(--space-sm);
         }
         
         .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: #333;
+            font-size: var(--font-size-md);
+            margin-bottom: var(--space-lg);
+            opacity: 0.9;
         }
         
         .btn {
             display: inline-block;
-            background-color: #008080;
-            color: white;
-            padding: 0.8rem 1.5rem;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            padding: var(--space-xs) var(--space-md);
             border-radius: 4px;
             font-weight: 500;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-md);
         }
         
         .btn:hover {
-            background-color: #006666;
+            background-color: var(--accent-light);
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         /* Featured Products */
         .featured {
-            padding: 3rem 2rem;
+            padding: var(--space-xl) var(--space-lg);
             max-width: 1200px;
             margin: 0 auto;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 2rem;
-            color: #006666;
-            font-size: 2rem;
+            margin-bottom: var(--space-lg);
+            color: var(--primary);
+            font-size: var(--font-size-xxl);
         }
         
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: var(--space-lg);
         }
         
         .product-card {
-            background-color: white;
+            background-color: var(--light);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         .product-img {
@@ -241,45 +282,45 @@
         }
         
         .product-info {
-            padding: 1.2rem;
+            padding: var(--space-md);
         }
         
         .product-title {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: #333;
+            font-size: var(--font-size-md);
+            margin-bottom: var(--space-xs);
+            color: var(--text-dark);
         }
         
         .product-price {
             font-weight: bold;
-            color: #008080;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-lg);
         }
         
         .view-btn {
             display: block;
             text-align: center;
-            background-color: #e0f2f1;
-            color: #008080;
-            padding: 0.6rem;
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: var(--space-xs);
             border-radius: 4px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
         
         .view-btn:hover {
-            background-color: #008080;
-            color: white;
+            background-color: var(--primary);
+            color: var(--text-light);
         }
         
         /* Footer */
         footer {
-            background-color: #008080;
-            color: white;
-            padding: 2rem;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: var(--space-lg);
             text-align: center;
-            margin-top: 3rem;
+            margin-top: var(--space-xl);
         }
         
         .footer-content {
@@ -290,17 +331,39 @@
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin: 1rem 0;
+            gap: var(--space-lg);
+            margin: var(--space-sm) 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            transition: color 0.3s ease;
         }
         
         .footer-links a:hover {
-            text-decoration: underline;
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin: var(--space-md) 0;
+        }
+        
+        .social-links a {
+            color: var(--text-light);
+            font-size: var(--font-size-lg);
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
         }
         
         .copyright {
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            margin-top: var(--space-sm);
+            font-size: var(--font-size-sm);
             opacity: 0.8;
         }
         
@@ -321,8 +384,8 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: white;
-                padding: 1rem 2rem;
+                background-color: var(--light);
+                padding: var(--space-sm) var(--space-lg);
                 box-shadow: 0 5px 10px rgba(0,0,0,0.1);
             }
         }
@@ -333,7 +396,7 @@
             }
             
             .header-container {
-                padding: 1rem;
+                padding: var(--space-sm);
             }
             
             .hero h1 {
@@ -351,7 +414,12 @@
             }
             
             .hero {
-                padding: 3rem 1rem;
+                padding: var(--space-xl) var(--space-sm);
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: var(--space-sm);
             }
         }
     </style>
@@ -455,30 +523,16 @@
     <script>
         // Sample product data
         const products = [
-            { id: 1, name: "Wireless Headphones", price: 59.99, image: "https://via.placeholder.com/300x200?text=Headphones" },
-            { id: 2, name: "Smart Watch", price: 129.99, image: "https://via.placeholder.com/300x200?text=Smart+Watch" },
-            { id: 3, name: "Bluetooth Speaker", price: 45.50, image: "https://via.placeholder.com/300x200?text=Speaker" },
-            { id: 4, name: "Laptop Backpack", price: 39.99, image: "https://via.placeholder.com/300x200?text=Backpack" },
-            { id: 5, name: "Wireless Mouse", price: 24.99, image: "https://via.placeholder.com/300x200?text=Mouse" },
-            { id: 6, name: "Mechanical Keyboard", price: 89.99, image: "https://via.placeholder.com/300x200?text=Keyboard" },
-            { id: 7, name: "Fitness Tracker", price: 49.99, image: "https://via.placeholder.com/300x200?text=Fitness+Tracker" },
-            { id: 8, name: "Portable Charger", price: 29.99, image: "https://via.placeholder.com/300x200?text=Charger" },
-            { id: 9, name: "Gaming Mousepad", price: 19.99, image: "https://via.placeholder.com/300x200?text=Mousepad" },
-            { id: 10, name: "USB-C Hub", price: 34.99, image: "https://via.placeholder.com/300x200?text=USB+Hub" },
-            { id: 11, name: "Noise Cancelling Earbuds", price: 79.99, image: "https://via.placeholder.com/300x200?text=Earbuds" },
-            { id: 12, name: "Desk Lamp", price: 27.50, image: "https://via.placeholder.com/300x200?text=Desk+Lamp" },
-            { id: 13, name: "External SSD", price: 109.99, image: "https://via.placeholder.com/300x200?text=SSD" },
-            { id: 14, name: "Ergonomic Chair", price: 199.99, image: "https://via.placeholder.com/300x200?text=Chair" },
-            { id: 15, name: "4K Webcam", price: 89.99, image: "https://via.placeholder.com/300x200?text=Webcam" },
-            { id: 16, name: "Wireless Charger", price: 32.99, image: "https://via.placeholder.com/300x200?text=Wireless+Charger" },
-            { id: 17, name: "Smart Bulb", price: 22.99, image: "https://via.placeholder.com/300x200?text=Smart+Bulb" },
-            { id: 18, name: "Laptop Stand", price: 29.99, image: "https://via.placeholder.com/300x200?text=Laptop+Stand" },
-            { id: 19, name: "Air Fryer", price: 89.99, image: "https://via.placeholder.com/300x200?text=Air+Fryer" },
-            { id: 20, name: "Blender", price: 49.99, image: "https://via.placeholder.com/300x200?text=Blender" },
-            { id: 21, name: "Coffee Maker", price: 59.99, image: "https://via.placeholder.com/300x200?text=Coffee+Maker" },
-            { id: 22, name: "Electric Kettle", price: 39.99, image: "https://via.placeholder.com/300x200?text=Kettle" },
-            { id: 23, name: "Toaster", price: 34.99, image: "https://via.placeholder.com/300x200?text=Toaster" },
-            { id: 24, name: "Food Processor", price: 79.99, image: "https://via.placeholder.com/300x200?text=Food+Processor" }
+            { id: 1, name: "Wireless Headphones", price: 59.99, image: "https://imgs.search.brave.com/zlf2VFXPZgEtBBlEpzCZbM3-N-aTTpy-oaB2gFFUfsQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dGhld2lyZWN1dHRl/ci5jb20vd3AtY29u/dGVudC9tZWRpYS8y/MDIzLzA3L2JsdWV0/b290aGhlYWRwaG9u/ZXMtMjA0OHB4LTYx/NDEuanBnP2F1dG89/d2VicCZxdWFsaXR5/PTc1JndpZHRoPTEw/MjQ" },
+            { id: 2, name: "Smart Watch", price: 129.99, image: "https://images.unsplash.com/photo-1461141346587-763ab02bced9?q=80&w=1100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { id: 3, name: "Bluetooth Speaker", price: 45.50, image: "https://images.unsplash.com/photo-1518671678551-911467efe539?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { id: 4, name: "Laptop Backpack", price: 39.99, image: "https://images.unsplash.com/photo-1673505379580-fe6de14f3080?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { id: 5, name: "Wireless Mouse", price: 24.99, image: "https://images.unsplash.com/photo-1586349906319-48d20e9d17e5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2lyZWxlc3MlMjBtb3VzZXxlbnwwfHwwfHx8MA%3D%3D" },
+            { id: 6, name: "Mechanical Keyboard", price: 89.99, image: "https://images.unsplash.com/photo-1602025882379-e01cf08baa51?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWVjaGFuaWNhbCUyMGtleWJvYXJkfGVufDB8fDB8fHww" },
+            { id: 7, name: "Fitness Tracker", price: 49.99, image: "https://images.unsplash.com/photo-1665860455423-166cab57c383?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Zml0bmVzcyUyMHRyYWNrZXJ8ZW58MHx8MHx8fDA%3D" },
+            { id: 8, name: "Portable Charger", price: 29.99, image: "https://images.unsplash.com/photo-1745888050708-b6136ce7fde3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHBvcnRhYmxlJTIwY2hhcmdlcnxlbnwwfHwwfHx8MA%3D%3D" },
+            { id: 9, name: "Gaming Mousepad", price: 19.99, image: "https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z2FtaW5nJTIwbW91c2VwYWR8ZW58MHx8MHx8fDA%3D" },
+            { id: 10, name: "USB-C Hub", price: 34.99, image: "https://images.unsplash.com/photo-1616578273577-5d54546f4dec?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNiJTIwYyUyMGh1YnxlbnwwfHwwfHx8MA%3D%3D" }
         ];
         
         // Display featured products
