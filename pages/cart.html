@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart - MiniStore</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* Reuse the same root variables and base styles from about.html */
+      :root {
+        /* Solid Colors */
+        --navy: #0a2463;
+        --electric-blue: #3e78b2;
+        --orange: #ff6b35;
+        --gold: #d4af37;
+        --plum: #2a0f1e;
+        --cream: #fff9fb;
+        --gray: #444444;
+
+        /* Gradients */
+        --navy-gradient: linear-gradient(
+          135deg,
+          var(--navy) 0%,
+          var(--electric-blue) 100%
+        );
+        --gold-gradient: linear-gradient(to right, var(--gold), #f1c40f);
+        --orange-gradient: linear-gradient(to right, var(--orange), #ff8c42);
+        --plum-gradient: linear-gradient(to bottom, var(--plum), #1a1a1a);
+
+        /* Semantic Variables */
+        --primary: var(--navy);
+        --secondary: var(--electric-blue);
+        --accent: var(--orange);
+        --premium: var(--gold);
+        --dark-bg: var(--plum);
+        --light-bg: var(--cream);
+        --text: var(--gray);
+
+        /* Spacing */
+        --space-sm: 1rem;
+        --space-md: 1.5rem;
+        --space-lg: 2rem;
+        --space-xl: 3rem;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--light-bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      /* Header Styles (same as about.html) */
+      header {
+        background: var(--plum-gradient);
+        color: var(--cream);
+        padding: var(--space-md) 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .logo i {
+        color: var(--gold);
+        margin-right: var(--space-sm);
+        font-size: 1.8rem;
+      }
+
+      .logo-text {
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: var(--space-lg);
+      }
+
+      nav ul li a {
+        color: var(--cream);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+      }
+
+      nav ul li a:hover {
+        color: var(--gold);
+      }
+
+      nav ul li a i {
+        margin-right: 8px;
+      }
+
+      .cart-icon {
+        position: relative;
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: var(--orange);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: var(--space-lg);
+      }
+
+      /* Cart Page Specific Styles */
+      .cart-header {
+        text-align: center;
+        margin-bottom: var(--space-xl);
+      }
+
+      .cart-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-sm);
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .cart-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--space-lg);
+      }
+
+      @media (max-width: 768px) {
+        .cart-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .cart-items {
+        background: white;
+        border-radius: 8px;
+        padding: var(--space-md);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .cart-summary {
+        background: white;
+        border-radius: 8px;
+        padding: var(--space-md);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        align-self: start;
+        position: sticky;
+        top: var(--space-lg);
+      }
+
+      .cart-item {
+        display: grid;
+        grid-template-columns: 100px 1fr auto;
+        gap: var(--space-md);
+        padding: var(--space-md) 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .cart-item:last-child {
+        border-bottom: none;
+      }
+
+      .cart-item-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .cart-item-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .cart-item-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .cart-item-details h3 {
+        color: var(--primary);
+        margin-bottom: var(--space-sm);
+      }
+
+      .cart-item-price {
+        color: var(--electric-blue);
+        font-weight: bold;
+      }
+
+      .cart-item-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .quantity-control {
+        display: flex;
+        align-items: center;
+      }
+
+      .quantity-control button {
+        width: 30px;
+        height: 30px;
+        background: var(--light-bg);
+        border: 1px solid #ddd;
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .quantity-control input {
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-left: none;
+        border-right: none;
+      }
+
+      .remove-item {
+        background: none;
+        border: none;
+        color: var(--orange);
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .remove-item:hover {
+        text-decoration: underline;
+      }
+
+      .cart-summary h2 {
+        color: var(--primary);
+        margin-bottom: var(--space-md);
+        padding-bottom: var(--space-sm);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: var(--space-sm);
+      }
+
+      .summary-total {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: var(--space-md) 0;
+        padding-top: var(--space-sm);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 12px;
+        background: var(--orange);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: var(--space-md);
+      }
+
+      .checkout-btn:hover {
+        background: var(--navy);
+      }
+
+      .continue-shopping {
+        display: inline-block;
+        margin-top: var(--space-md);
+        color: var(--electric-blue);
+        text-decoration: none;
+      }
+
+      .continue-shopping:hover {
+        text-decoration: underline;
+      }
+
+      .empty-cart {
+        text-align: center;
+        padding: var(--space-xl) 0;
+      }
+
+      .empty-cart i {
+        font-size: 3rem;
+        color: var(--electric-blue);
+        margin-bottom: var(--space-md);
+      }
+
+      .empty-cart h2 {
+        margin-bottom: var(--space-md);
+        color: var(--primary);
+      }
+
+      /* Footer Styles (same as about.html) */
+      footer {
+        background: var(--plum-gradient);
+        color: var(--cream);
+        padding: var(--space-xl) 0;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-lg);
+      }
+
+      .footer-column h3 {
+        color: var(--gold);
+        margin-bottom: var(--space-md);
+        font-size: 1.2rem;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: var(--space-sm);
+      }
+
+      .footer-column ul li a {
+        color: var(--cream);
+        text-decoration: none;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+      }
+
+      .footer-column ul li a:hover {
+        opacity: 1;
+      }
+
+      .social-links-footer {
+        display: flex;
+        gap: var(--space-md);
+        margin-top: var(--space-md);
+      }
+
+      .social-links-footer a {
+        color: var(--gold);
+        font-size: 1.2rem;
+        transition: color 0.3s;
+      }
+
+      .social-links-footer a:hover {
+        color: white;
+      }
+
+      .copyright {
+        text-align: center;
+        margin-top: var(--space-xl);
+        padding-top: var(--space-md);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .header-container {
+          flex-direction: column;
+          padding: var(--space-md);
+        }
+
+        nav ul {
+          margin-top: var(--space-md);
+        }
+
+        nav ul li {
+          margin-left: var(--space-md);
+        }
+
+        .container {
+          padding: var(--space-md);
+        }
+
+        .cart-item {
+          grid-template-columns: 80px 1fr;
+          grid-template-rows: auto auto;
+        }
+
+        .cart-item-actions {
+          grid-column: 1 / -1;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav ul {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        nav ul li {
+          margin: var(--space-sm);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header (same as about.html) -->
+    <header>
+      <div class="header-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-store"></i>
+          <span class="logo-text">MiniStore</span>
+        </a>
+
+        <nav>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="products.html"
+                ><i class="fas fa-shopping-bag"></i> Shop</a
+              >
+            </li>
+            <li>
+              <a href="deals.html"><i class="fas fa-tag"></i> Deals</a>
+            </li>
+            <li>
+              <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            </li>
+            <li>
+              <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            </li>
+            <li>
+              <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="cart-header">
+        <h1>Your Shopping Cart</h1>
+        <p>Review and edit your items before checkout</p>
+      </div>
+
+      <div class="cart-container">
+        <div class="cart-items" id="cartItemsContainer">
+          <!-- Cart items will be dynamically inserted here -->
+          <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any items to your cart yet.</p>
+            <a href="products.html" class="btn">Continue Shopping</a>
+          </div>
+        </div>
+
+        <div class="cart-summary" id="cartSummaryContainer">
+          <h2>Order Summary</h2>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">$0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>Calculated at checkout</span>
+          </div>
+          <div class="summary-row">
+            <span>Tax</span>
+            <span>Calculated at checkout</span>
+          </div>
+          <div class="summary-total">
+            <span>Estimated Total</span>
+            <span id="cartTotal">$0.00</span>
+          </div>
+          <a href="./checkout/confirmation.html" class="checkout-btn"
+            >Proceed to Checkout</a
+          >
+          <a href="products.html" class="continue-shopping">
+            <i class="fas fa-arrow-left"></i> Continue Shopping
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer (same as about.html) -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-column">
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="#">All Products</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Featured</a></li>
+            <li><a href="#">Deals & Promotions</a></li>
+            <li><a href="#">Gift Cards</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping & Returns</a></li>
+            <li><a href="#">Order Tracking</a></li>
+            <li><a href="#">Size Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>About Us</h3>
+          <ul>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Connect With Us</h3>
+          <p>Follow us on social media for updates and promotions.</p>
+          <div class="social-links-footer">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2023 MiniStore. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get cart from localStorage or initialize empty cart
+        let cart = JSON.parse(localStorage.getItem("ministore_cart")) || {
+          items: [],
+          total: 0,
+          count: 0,
+        };
+
+        // Update cart count in header
+        const cartCount = document.getElementById("cartCount");
+        cartCount.textContent = cart.count;
+
+        // DOM elements
+        const cartItemsContainer =
+          document.getElementById("cartItemsContainer");
+        const cartSubtotal = document.getElementById("cartSubtotal");
+        const cartTotal = document.getElementById("cartTotal");
+        const checkoutBtn = document.querySelector(".checkout-btn");
+
+        // Format currency
+        function formatCurrency(amount) {
+          return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(amount);
+        }
+
+        // Render cart items
+        function renderCart() {
+          if (cart.items.length === 0) {
+            cartItemsContainer.innerHTML = `
+              <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="products.html" class="btn">Continue Shopping</a>
+              </div>
+            `;
+            cartSubtotal.textContent = formatCurrency(0);
+            cartTotal.textContent = formatCurrency(0);
+            checkoutBtn.disabled = true;
+            return;
+          }
+
+          // Calculate subtotal
+          const subtotal = cart.items.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          );
+
+          // Update summary
+          cartSubtotal.textContent = formatCurrency(subtotal);
+          cartTotal.textContent = formatCurrency(subtotal); // In a real app, you'd add shipping/tax
+
+          // Enable checkout button
+          checkoutBtn.disabled = false;
+
+          // Render items
+          cartItemsContainer.innerHTML = cart.items
+            .map(
+              (item) => `
+            <div class="cart-item" data-id="${item.id}">
+              <div class="cart-item-image">
+                <img src="https://via.placeholder.com/100?text=${encodeURIComponent(
+                  item.name
+                )}" alt="${item.name}">
+              </div>
+              <div class="cart-item-details">
+                <h3>${item.name}</h3>
+                <span class="cart-item-price">${formatCurrency(
+                  item.price
+                )}</span>
+              </div>
+              <div class="cart-item-actions">
+                <div class="quantity-control">
+                  <button class="decrease-qty" data-id="${item.id}">-</button>
+                  <input type="number" value="${
+                    item.quantity
+                  }" min="1" class="item-qty" data-id="${item.id}">
+                  <button class="increase-qty" data-id="${item.id}">+</button>
+                </div>
+                <button class="remove-item" data-id="${item.id}">Remove</button>
+              </div>
+            </div>
+          `
+            )
+            .join("");
+
+          // Add event listeners
+          document.querySelectorAll(".decrease-qty").forEach((button) => {
+            button.addEventListener("click", function () {
+              updateQuantity(this.dataset.id, -1);
+            });
+          });
+
+          document.querySelectorAll(".increase-qty").forEach((button) => {
+            button.addEventListener("click", function () {
+              updateQuantity(this.dataset.id, 1);
+            });
+          });
+
+          document.querySelectorAll(".item-qty").forEach((input) => {
+            input.addEventListener("change", function () {
+              setQuantity(this.dataset.id, parseInt(this.value));
+            });
+          });
+
+          document.querySelectorAll(".remove-item").forEach((button) => {
+            button.addEventListener("click", function () {
+              removeItem(this.dataset.id);
+            });
+          });
+        }
+
+        // Update item quantity
+        function updateQuantity(itemId, change) {
+          const item = cart.items.find((item) => item.id === itemId);
+          if (!item) return;
+
+          const newQuantity = item.quantity + change;
+          if (newQuantity < 1) {
+            removeItem(itemId);
+            return;
+          }
+
+          item.quantity = newQuantity;
+          cart.total += item.price * change;
+          cart.count += change;
+
+          saveCart();
+          renderCart();
+        }
+
+        // Set item quantity directly
+        function setQuantity(itemId, quantity) {
+          if (quantity < 1) {
+            removeItem(itemId);
+            return;
+          }
+
+          const item = cart.items.find((item) => item.id === itemId);
+          if (!item) return;
+
+          const change = quantity - item.quantity;
+          item.quantity = quantity;
+          cart.total += item.price * change;
+          cart.count += change;
+
+          saveCart();
+          renderCart();
+        }
+
+        // Remove item from cart
+        function removeItem(itemId) {
+          const itemIndex = cart.items.findIndex((item) => item.id === itemId);
+          if (itemIndex === -1) return;
+
+          const item = cart.items[itemIndex];
+          cart.items.splice(itemIndex, 1);
+          cart.total -= item.price * item.quantity;
+          cart.count -= item.quantity;
+
+          saveCart();
+          renderCart();
+        }
+
+        // Save cart to localStorage and update header count
+        function saveCart() {
+          localStorage.setItem("ministore_cart", JSON.stringify(cart));
+          cartCount.textContent = cart.count;
+        }
+
+        // Checkout button handler
+        checkoutBtn.addEventListener("click", function () {
+          alert("Checkout functionality would be implemented here!");
+          // In a real app, you would redirect to a checkout page
+        });
+
+        // Initial render
+        renderCart();
+
+        // Example of how to add items to cart from other pages
+        // This would be called when "Add to Cart" buttons are clicked
+        window.addToCart = function (id, name, price, quantity = 1) {
+          const existingItem = cart.items.find((item) => item.id === id);
+
+          if (existingItem) {
+            existingItem.quantity += quantity;
+          } else {
+            cart.items.push({
+              id,
+              name,
+              price,
+              quantity,
+            });
+          }
+
+          // Update totals
+          cart.count += quantity;
+          cart.total += price * quantity;
+
+          // Save and update display
+          saveCart();
+
+          // If we're on the cart page, re-render
+          if (window.location.pathname.includes("cart.html")) {
+            renderCart();
+          }
+        };
+
+        // Example test data - remove in production
+        // addToCart('prod1', 'Premium T-Shirt', 24.99, 2);
+        // addToCart('prod2', 'Designer Jeans', 59.99, 1);
+      });
+    </script>
+  </body>
+</html>

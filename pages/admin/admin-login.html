@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniStore - Admin Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            /* Solid Colors */
+            --navy: #0A2463;
+            --electric-blue: #3E78B2;
+            --orange: #FF6B35;
+            --gold: #D4AF37;
+            --plum: #2A0F1E;
+            --cream: #FFF9FB;
+            --gray: #444444;
+
+            /* Gradients */
+            --navy-gradient: linear-gradient(135deg, var(--navy) 0%, var(--electric-blue) 100%);
+            --gold-gradient: linear-gradient(to right, var(--gold), #F1C40F);
+            --orange-gradient: linear-gradient(to right, var(--orange), #FF8C42);
+            --plum-gradient: linear-gradient(to bottom, var(--plum), #1A1A1A);
+
+            /* Semantic Variables */
+            --primary: var(--navy);
+            --secondary: var(--electric-blue);
+            --accent: var(--orange);
+            --premium: var(--gold);
+            --dark-bg: var(--plum);
+            --light-bg: var(--cream);
+            --text: var(--gray);
+
+            /* Spacing */
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: var(--space-md);
+            background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(10, 36, 99, 0.85);
+        }
+        
+        .admin-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+        
+        .admin-header {
+            background: var(--plum-gradient);
+            color: var(--cream);
+            padding: var(--space-lg);
+            text-align: center;
+            position: relative;
+        }
+        
+        .admin-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold-gradient);
+        }
+        
+        .admin-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-logo i {
+            margin-right: 10px;
+            color: var(--gold);
+        }
+        
+        .admin-title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+        
+        .admin-body {
+            padding: var(--space-lg);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--electric-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(62, 120, 178, 0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 38px;
+            color: var(--electric-blue);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-login {
+            background: var(--orange-gradient);
+            color: white;
+            margin-top: var(--space-md);
+        }
+        
+        .btn-login:hover {
+            background: var(--electric-blue);
+            transform: translateY(-2px);
+        }
+        
+        .admin-footer {
+            text-align: center;
+            padding: var(--space-md);
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .admin-footer a {
+            color: var(--electric-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .admin-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .security-info {
+            display: flex;
+            align-items: center;
+            margin-top: var(--space-md);
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+        
+        .security-info i {
+            color: var(--gold);
+            margin-right: 8px;
+        }
+        
+        .error-message {
+            color: #d32f2f;
+            background-color: #fde8e8;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: var(--space-md);
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 480px) {
+            .admin-container {
+                margin: 0 var(--space-md);
+            }
+            
+            .admin-header {
+                padding: var(--space-md);
+            }
+            
+            .admin-body {
+                padding: var(--space-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-logo">
+                <i class="fas fa-lock"></i>
+                <span>MiniStore</span>
+            </div>
+            <div class="admin-title">Administrator Portal</div>
+        </div>
+        
+        <div class="admin-body">
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText">Invalid credentials. Please try again.</span>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Admin Email</label>
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="adminEmail" required placeholder="admin@ministore.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <i class="fas fa-key input-icon"></i>
+                    <input type="password" id="adminPassword" required placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="btn btn-login">Login</button>
+                
+                <div class="security-info">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure admin portal. Unauthorized access prohibited.</span>
+                </div>
+            </form>
+        </div>
+        
+        <div class="admin-footer">
+            <a href="#" id="forgotPassword">Forgot password?</a> | 
+            <a href="mailto:it-support@ministore.com">Contact IT Support</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('adminLoginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Hardcoded admin credentials (for demo only - in production use server-side auth)
+            const ADMIN_CREDENTIALS = {
+                email: "admin@ministore.com",
+                password: "SecurePass123!" // In real app, this would be hashed
+            };
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('adminEmail').value;
+                const password = document.getElementById('adminPassword').value;
+                
+                // Simple validation (in real app, this would be server-side)
+                if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
+                    // Successful login - redirect to admin dashboard
+                    errorMessage.style.display = 'none';
+                    alert('Login successful! Redirecting to admin dashboard...');
+                    // In real implementation: window.location.href = '/admin/dashboard.html';
+                } else {
+                    // Show error message
+                    document.getElementById('errorText').textContent = 
+                        email === ADMIN_CREDENTIALS.email ? 
+                        'Incorrect password' : 'Admin email not recognized';
+                    errorMessage.style.display = 'flex';
+                    
+                    // Shake animation for error
+                    loginForm.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        loginForm.style.animation = '';
+                    }, 500);
+                }
+            });
+            
+            // Forgot password functionality
+            document.getElementById('forgotPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = prompt('Please enter your admin email to reset password:');
+                if (email) {
+                    alert(`Password reset link has been sent to ${email} (simulated)`);
+                }
+            });
+            
+            // Add shake animation dynamically
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

@@ -1,54 +1,73 @@
 <!-- Professional Top Bar -->
 <div class="top-bar">
-    <div class="top-bar-container">
-        <div class="contact-info">
-            <a href="tel:+1234567890"><i class="fas fa-phone-alt"></i> +1 (234) 567-890</a>
-            <a href="mailto:info@ministore.com"><i class="fas fa-envelope"></i> info@ministore.com</a>
-        </div>
-        <div class="user-links">
-            <a href="#"><i class="fas fa-user"></i> Account</a>
-            <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
-        </div>
+  <div class="top-bar-container">
+    <div class="contact-info">
+      <a href="tel:+1234567890"
+        ><i class="fas fa-phone-alt"></i> +1 (234) 567-890</a
+      >
+      <a href="mailto:info@ministore.com"
+        ><i class="fas fa-envelope"></i> info@ministore.com</a
+      >
     </div>
+    <div class="user-links">
+      <a href="#"><i class="fas fa-user"></i> Account</a>
+      <a href="#"><i class="fas fa-heart"></i> Wishlist</a>
+    </div>
+  </div>
 </div>
 
 <!-- Main Header with Navigation -->
 <header class="main-header">
-    <div class="header-container">
-        <a href="index.html" class="logo">
-            <i class="fas fa-store"></i>
-            MiniStore
-        </a>
-        
-        <nav class="main-nav" id="mainNav">
-            <div class="mobile-menu-toggle" id="mobileMenuToggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">New Arrivals</a></li>
-                <li><a href="#">Deals</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-            
-            <div class="nav-actions">
-                <div class="search-wrapper">
-                    <i class="fas fa-search nav-icon"></i>
-                </div>
-                <div class="user-wrapper">
-                    <i class="fas fa-user nav-icon"></i>
-                </div>
-                <div class="cart-wrapper">
-                    <a href="cart.html">
-                        <i class="fas fa-shopping-cart nav-icon"></i>
-                        <span class="cart-count" id="cart-count">0</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
+  <div class="header-container">
+    <a href="index.html" class="logo">
+      <i class="fas fa-store" style="color: var(--gold)"></i>
+      <span
+        style="
+          background: var(--gold-gradient);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        "
+        >MiniStore</span
+      >
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <div class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#" style="color: var(--orange)">Deals</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="search-wrapper">
+          <i class="fas fa-search nav-icon"></i>
+        </div>
+        <div class="user-wrapper">
+          <i class="fas fa-user nav-icon"></i>
+        </div>
+        <div class="cart-wrapper">
+          <a href="cart.html">
+            <i
+              class="fas fa-shopping-cart nav-icon"
+              style="color: var(--orange)"
+            ></i>
+            <span
+              class="cart-count"
+              id="cart-count"
+              style="background: var(--orange-gradient)"
+              >0</span
+            >
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>
